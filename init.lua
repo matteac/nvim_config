@@ -478,7 +478,7 @@ require('lazy').setup({
         elp = {},
         ccls = {
           cmd = { "ccls" },
-          root_dir = lspconfig_util.root_pattern("Makefile", ".git", ".ccls"),
+          root_dir = lspconfig_util.root_pattern("Makefile", ".git", ".ccls", "CMakeLists.txt"),
         }
       }
 
@@ -560,6 +560,8 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        cpp = { 'clang-format' },
+        c = { "clang-format" }
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
