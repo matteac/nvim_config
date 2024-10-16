@@ -279,7 +279,7 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -402,11 +402,11 @@ require('lazy').setup({
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map('lca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+          map('<leader>a', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap.
-          map('lho', vim.lsp.buf.hover, 'Hover Documentation')
+          map('<leader>k', vim.lsp.buf.hover, 'Hover Documentation')
           map('lsh', vim.lsp.buf.signature_help, 'Signature Help')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
@@ -468,6 +468,7 @@ require('lazy').setup({
           cmd = { "deno", "lsp" },
           root_dir = lspconfig_util.root_pattern("deno.json")
         },
+        solargraph = {},
         elixirls = {
           cmd = { "elixir_ls" }
         },
@@ -484,7 +485,6 @@ require('lazy').setup({
 
 
       local servers = {
-        svelte = {},
         tsserver = {
           on_attach = function(client, _)
             if vim.fn.filereadable(vim.fn.getcwd() .. "/deno.json") == 1 then
@@ -493,6 +493,8 @@ require('lazy').setup({
             end
           end
         },
+        svelte = {},
+        vuels = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -561,7 +563,9 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         cpp = { 'clang-format' },
-        c = { "clang-format" }
+        c = { "clang-format" },
+        typescript = { "biome" },
+        javascript = { "biome" },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -651,6 +655,7 @@ require('lazy').setup({
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
           ['<C-Space>'] = cmp.mapping.complete {},
+          ['<C-x>'] = cmp.mapping.complete {},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
