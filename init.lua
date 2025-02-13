@@ -71,6 +71,20 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+
+local buffer_delete_others = function()
+  local buffers = vim.api.nvim_list_bufs()
+  local current_buffer = vim.api.nvim_get_current_buf()
+  for _, i in ipairs(buffers) do
+    if i ~= current_buffer then
+      vim.api.nvim_buf_delete(i, {})
+    end
+  end
+  print("Buffers cleaned")
+end
+
+vim.keymap.set("n", "<leader>bd", buffer_delete_others, { desc = "Delete all buffers except the current one" })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
